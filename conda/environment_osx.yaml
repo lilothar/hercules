@@ -1,0 +1,8 @@
+name:  hercules_d
+channels:
+  - conda-forge
+  - defaults
+  - flare-rpc
+dependencies:
+  - libtensorflow_cc
+  - libflare
