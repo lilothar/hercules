@@ -67,12 +67,12 @@ endif ()
 #########################
 # default package
 
-set(ABEL_DYLINK)
+set(CARBIN_SYS_DYLINK)
 if (APPLE)
     find_library(CoreFoundation CoreFoundation)
-    list(APPEND ABEL_DYLINK ${CoreFoundation} pthread)
+    list(APPEND CARBIN_SYS_DYLINK ${CoreFoundation} pthread)
 elseif (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-    list(APPEND ABEL_DYLINK rt dl pthread)
+    list(APPEND CARBIN_SYS_DYLINK rt dl pthread)
 endif ()
 
 
@@ -96,7 +96,10 @@ set(DYNAMIC_LIB
 include(CompileProto)
 
 set(PROTO_FILES
-        hercules/proto/types.proto
+        hercules/proto/data_type.proto
+        hercules/proto/memory_type.proto
+        hercules/proto/error_code.proto
+        hercules/proto/parameter_type.proto
         )
 find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIR})
@@ -111,7 +114,7 @@ carbin_cc_library(
         NAMESPACE hercules
         NAME proto
         SOURCES ${PROTO_SRCS}
-        PUBLIC_LINKED_TARGETS ${ABEL_DYLINK} ${DYNAMIC_LIB}
+        PUBLIC_LINKED_TARGETS ${CARBIN_SYS_DYLINK} ${DYNAMIC_LIB}
         PRIVATE_COMPILE_OPTIONS ${CARBIN_DEFAULT_COPTS}
         PUBLIC
         SHARED

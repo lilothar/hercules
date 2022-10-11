@@ -19,21 +19,3 @@ enum DataType {
     TYPE_BYTES = 13;
     TYPE_BF16 = 14;
 }
-
-enum MemoryType {
-    MEMORY_CPU = 0;
-    MEMORY_CPU_BINDING = 1;
-    MEMORY_GPU = 2;
-}
-
-enum ErrorCode {
-    ERROR_SUCCESS = 0;
-    ERROR_UNKNOWN = 1;
-    ERROR_INTERNAL = 2;
-    ERROR_NOT_FOUND = 3;
-    ERROR_INVALID_ARG = 4;
-    ERROR_UNAVAILABLE = 5;
-    ERROR_UNSUPPORTED = 6;
-    ERROR_ALREADY_EXISTS = 7;
-}
-
