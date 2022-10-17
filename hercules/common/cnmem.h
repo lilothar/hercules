@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * ********************************************************************** */
 #pragma once
-
+#ifdef HERCULES_ENABLE_GPU
 #ifdef __cplusplus
 #include "cstdio"
 #else
@@ -35,8 +35,11 @@
 #include "cuda_runtime_api.h"
 
 #if defined(_MSC_VER) || defined(WIN32)
-// Don't define dllexport / dllimport as cnmem will be built as static library
-#define CNMEM_API
+#ifdef CNMEM_DLLEXPORT
+#define CNMEM_API __declspec(dllexport)
+#else
+#define CNMEM_API __declspec(dllimport)
+#endif
 #else
 #ifdef CNMEM_DLLEXPORT
 #define CNMEM_API __attribute__((visibility ("default")))
@@ -259,3 +262,4 @@ const char CNMEM_API * cnmemGetErrorString(cnmemStatus_t status);
 } // extern "C"
 #endif
 
+#endif  // HERCULES_ENABLE_GPU
