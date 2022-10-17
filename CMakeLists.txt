@@ -100,6 +100,7 @@ set(PROTO_FILES
         hercules/proto/memory_type.proto
         hercules/proto/error_code.proto
         hercules/proto/parameter_type.proto
+        hercules/proto/model_config.proto
         )
 find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIR})
@@ -116,8 +117,6 @@ carbin_cc_library(
         SOURCES ${PROTO_SRCS}
         PUBLIC_LINKED_TARGETS ${CARBIN_SYS_DYLINK} ${DYNAMIC_LIB}
         PRIVATE_COMPILE_OPTIONS ${CARBIN_DEFAULT_COPTS}
-        PUBLIC
-        SHARED
 )
 
 

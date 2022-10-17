@@ -6,10 +6,12 @@
 #
 #################################################################
 
+FILE(GLOB_RECURSE COMMON_SRC "common/*.cc")
 FILE(GLOB_RECURSE CORE_SRC "core/*.cc")
 
 
 SET(HERCULES_LIB_SRC
+        ${COMMON_SRC}
         ${CORE_SRC}
         )
 
@@ -17,7 +19,8 @@ carbin_cc_library(
         NAMESPACE hercules
         NAME core
         SOURCES ${HERCULES_LIB_SRC}
-        PUBLIC_LINKED_TARGETS ${CAEBIN_SYS_DYLINK}
+        PUBLIC_LINKED_TARGETS ${CAEBIN_SYS_DYLINK} ${DYNAMIC_LIB}
+        PRIVATE_LINKED_TARGETS hercules::proto
         PRIVATE_COMPILE_OPTIONS ${CARBIN_DEFAULT_COPTS}
         PUBLIC
         SHARED
