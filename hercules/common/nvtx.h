@@ -25,7 +25,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
-#ifdef TRITON_ENABLE_NVTX
+#ifdef HERCULES_ENABLE_NVTX
 
 #include <nvtx3/nvToolsExt.h>
 
@@ -43,12 +43,12 @@ class NvtxRange {
 
 }  // namespace hercules::common
 
-#endif  // TRITON_ENABLE_NVTX
+#endif  // HERCULES_ENABLE_NVTX
 
 //
 // Macros to access NVTX functionality
 //
-#ifdef TRITON_ENABLE_NVTX
+#ifdef HERCULES_ENABLE_NVTX
 #define NVTX_INITIALIZE nvtxInitialize(nullptr)
 #define NVTX_RANGE(V, L) hercules::common::NvtxRange V(L)
 #define NVTX_MARKER(L) nvtxMarkA(L)
@@ -56,4 +56,4 @@ class NvtxRange {
 #define NVTX_INITIALIZE
 #define NVTX_RANGE(V, L)
 #define NVTX_MARKER(L)
-#endif  // TRITON_ENABLE_NVTX
+#endif  // HERCULES_ENABLE_NVTX

@@ -72,7 +72,7 @@ namespace hercules::core {
         }
 
         std::set<int> supported_gpus;
-        auto status = GetSupportedGPUs(
+        auto status = get_supported_gpus(
                 &supported_gpus, options.min_supported_compute_capability_);
         if (status.IsOk()) {
             std::vector<cnmemDevice_t> devices;

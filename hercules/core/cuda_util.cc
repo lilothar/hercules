@@ -16,7 +16,7 @@ namespace hercules::core {
     void CUDART_CB
 MemcpyHost(void* args)
 {
-  auto* copy_params = reinterpret_cast<CopyParams*>(args);
+  auto* copy_params = reinterpret_cast<copy_params*>(args);
   memcpy(copy_params->dst_, copy_params->src_, copy_params->byte_size_);
   delete copy_params;
 }
@@ -64,7 +64,7 @@ MemcpyHost(void* args)
   // do is skipping it...
   std::set<int> supported_gpus;
   bool all_enabled = false;
-  if (GetSupportedGPUs(&supported_gpus, min_compute_capability).IsOk()) {
+  if (get_supported_gpus(&supported_gpus, min_compute_capability).IsOk()) {
     all_enabled = true;
     int can_access_peer = false;
     for (const auto& host : supported_gpus) {
@@ -113,7 +113,7 @@ MemcpyHost(void* args)
             (dst_memory_type != hercules::proto::MEMORY_GPU)) {
 #ifdef HERCULES_ENABLE_GPU
             if (copy_on_stream) {
-      auto params = new CopyParams(dst, src, byte_size);
+      auto params = new copy_params(dst, src, byte_size);
       cudaLaunchHostFunc(
           cuda_stream, MemcpyHost, reinterpret_cast<void*>(params));
       *cuda_used = true;
@@ -141,7 +141,7 @@ MemcpyHost(void* args)
     }
 
     void
-    CopyBufferHandler(
+    copy_buffer_handler(
             const std::string &msg, const hercules::proto::MemoryType src_memory_type,
             const int64_t src_memory_type_id,
             const hercules::proto::MemoryType dst_memory_type,
@@ -158,7 +158,7 @@ MemcpyHost(void* args)
 
 #ifdef HERCULES_ENABLE_GPU
     flare::result_status
-CheckGPUCompatibility(const int gpu_id, const double min_compute_capability)
+check_gpu_compatibility(const int gpu_id, const double min_compute_capability)
 {
   // Query the compute capability from the device
   cudaDeviceProp cuprops;
@@ -186,7 +186,7 @@ CheckGPUCompatibility(const int gpu_id, const double min_compute_capability)
 }
 
 flare::result_status
-GetSupportedGPUs(
+get_supported_gpus(
     std::set<int>* supported_gpus, const double min_compute_capability)
 {
   // Make sure set is empty before starting
@@ -204,7 +204,7 @@ GetSupportedGPUs(
 
   // populates supported_gpus
   for (int gpu_id = 0; gpu_id < device_cnt; gpu_id++) {
-    flare::result_status status = CheckGPUCompatibility(gpu_id, min_compute_capability);
+    flare::result_status status = check_gpu_compatibility(gpu_id, min_compute_capability);
     if (status.IsOk()) {
       supported_gpus->insert(gpu_id);
     }
@@ -213,7 +213,7 @@ GetSupportedGPUs(
 }
 
 flare::result_status
-SupportsIntegratedZeroCopy(const int gpu_id, bool* zero_copy_support)
+supports_integrated_zero_copy(const int gpu_id, bool* zero_copy_support)
 {
   // Query the device to check if integrated
   cudaDeviceProp cuprops;

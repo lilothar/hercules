@@ -71,7 +71,7 @@ namespace hercules::core {
 
 #else
     // Use variable to make sure no NUMA related function is actually called
-    // if Triton is not running with NUMA awareness. i.e. Extra docker permission
+    // if hercules is not running with NUMA awareness. i.e. Extra docker permission
     // is needed to call the NUMA functions and this ensures backward compatibility.
     thread_local bool numa_set = false;
 

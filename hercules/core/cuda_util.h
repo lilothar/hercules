@@ -19,7 +19,6 @@
 
 namespace hercules::core {
 
-
 #ifdef HERCULES_ENABLE_GPU
 #define RETURN_IF_CUDA_ERR(X, MSG)                                           \
   do {                                                                       \
@@ -78,35 +77,35 @@ namespace hercules::core {
 
 #ifdef HERCULES_ENABLE_GPU
     /// Validates the compute capability of the GPU indexed
-/// \param gpu_id The index of the target GPU.
-/// \param min_compute_capability The minimum support CUDA compute
-/// capability.
-/// \return The error status. A non-OK status means the target GPU is
-/// not supported.
-flare::result_status CheckGPUCompatibility(
-    const int gpu_id, const double min_compute_capability);
+    /// \param gpu_id The index of the target GPU.
+    /// \param min_compute_capability The minimum support CUDA compute
+    /// capability.
+    /// \return The error status. A non-OK status means the target GPU is
+    /// not supported.
+    flare::result_status check_gpu_compatibility(
+        const int gpu_id, const double min_compute_capability);
 
-/// Obtains a set of gpu ids that is supported by triton.
-/// \param supported_gpus Returns the set of integers which is
-///  populated by ids of supported GPUS
-/// \param min_compute_capability The minimum support CUDA compute
-/// capability.
-/// \return The error status. A non-ok status means there were
-/// errors encountered while querying GPU devices.
-flare::result_status GetSupportedGPUs(
-    std::set<int>* supported_gpus, const double min_compute_capability);
+    /// Obtains a set of gpu ids that is supported by hercules.
+    /// \param supported_gpus Returns the set of integers which is
+    ///  populated by ids of supported GPUS
+    /// \param min_compute_capability The minimum support CUDA compute
+    /// capability.
+    /// \return The error status. A non-ok status means there were
+    /// errors encountered while querying GPU devices.
+    flare::result_status get_supported_gpus(
+        std::set<int>* supported_gpus, const double min_compute_capability);
 
-/// Checks if the GPU specified is an integrated GPU and supports Zero-copy.
-/// \param gpu_id The index of the target GPU.
-/// \param zero_copy_support If true, Zero-copy is supported by this GPU.
-/// \return The error status. A non-OK status means the target GPU is
-/// not supported.
-flare::result_status SupportsIntegratedZeroCopy(const int gpu_id, bool* zero_copy_support);
+    /// Checks if the GPU specified is an integrated GPU and supports Zero-copy.
+    /// \param gpu_id The index of the target GPU.
+    /// \param zero_copy_support If true, Zero-copy is supported by this GPU.
+    /// \return The error status. A non-OK status means the target GPU is
+    /// not supported.
+    flare::result_status supports_integrated_zero_copy(const int gpu_id, bool* zero_copy_support);
 #endif
 
     // Helper around CopyBuffer that updates the completion queue with the returned
     // status and cuda_used flag.
-    void CopyBufferHandler(
+    void copy_buffer_handler(
             const std::string &msg, const hercules::proto::MemoryType src_memory_type,
             const int64_t src_memory_type_id,
             const hercules::proto::MemoryType dst_memory_type,
@@ -115,8 +114,8 @@ flare::result_status SupportsIntegratedZeroCopy(const int gpu_id, bool* zero_cop
             hercules::common::sync_queue <std::tuple<flare::result_status, bool, void *>> *
             completion_queue);
 
-    struct CopyParams {
-        CopyParams(void *dst, const void *src, const size_t byte_size)
+    struct copy_params {
+        copy_params(void *dst, const void *src, const size_t byte_size)
                 : dst_(dst), src_(src), byte_size_(byte_size) {
         }
 
