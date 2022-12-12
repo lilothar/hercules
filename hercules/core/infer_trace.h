@@ -117,7 +117,7 @@ namespace hercules::core {
     // InferenceTraceProxy
     //
     // Object attached as shared_ptr to InferenceRequest and
-    // InferenceResponse(s) being traced as part of a single inference
+    // inference_response(s) being traced as part of a single inference
     // request.
     //
     class InferenceTraceProxy {
